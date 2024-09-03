@@ -1,16 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
 import 'package:mini_ecommerce/global_wiidgets/custom_button.dart';
 import 'package:mini_ecommerce/providers/cart_provider.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
-  CartScreen({Key? key}) : super(key: key);
+  const CartScreen({super.key});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -22,34 +19,10 @@ class _CartScreenState extends State<CartScreen> {
   List<QueryDocumentSnapshot> cartItems = [];
   double? totalAmount = 0.00;
 
-  double calculateAmount() {
-    // cartItems.fold(0.00, (prev, item) => double.parse(prev.toString()) + double.parse((item.get(field)).toString()));
-    for (var data in cartItems) {
-      num price = NumberFormat().parse(data["price"]);
-      num quantity = data["quantity"];
-
-      //print(price * quantity); worked
-
-      // finalAmount += price * quantity;
-      // totalAmount = finalAmount;
-    }
-    return 0.00;
-  }
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     CartProvider cartProvider = Provider.of<CartProvider>(context);
     final size = MediaQuery.sizeOf(context).width;
-
-    // print(cartItems.first.);
-    print("hi");
-    print(cartProvider.item);
 
     return Scaffold(
         body: StreamBuilder(
@@ -72,8 +45,6 @@ class _CartScreenState extends State<CartScreen> {
                     final data = snapshot.data!.docs[index];
                     cartItems = snapshot.data!.docs;
                     cartProvider.item = cartItems;
-
-                    calculateAmount();
 
                     return Padding(
                       padding: const EdgeInsets.all(15.0),
@@ -211,9 +182,17 @@ class _CartScreenState extends State<CartScreen> {
                 ),
 
                 //------------------------------Button-----------------------------
-                const CustomButton(
-                  buttonName: "Buy Now",
+
+                CustomButton(
+                  btnName: "Register",
+                  textColor: Colors.white,
+                  bgColor: AppColors.primaryColor,
+                  onClick: () {},
                 )
+
+                // const CustomButton(
+                //   buttonName: "Buy Now",
+                // )
               ]),
         ));
   }

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class CartProvider with ChangeNotifier {
   final user = FirebaseAuth.instance.currentUser;
@@ -21,10 +20,13 @@ class CartProvider with ChangeNotifier {
           "quantity": 1,
           "email": user!.email
         })
-        .then((value) => {print("added")})
+        .then((value) => print("added"))
         .catchError((e, stackTrace) {
           if (kDebugMode) {
             print(e.toString());
+          }
+          if (kDebugMode) {
+            print("The Stack Error:$stackTrace");
           }
         });
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomRow extends StatelessWidget {
-  final title;
+  final String? title;
 
-  final value;
-  CustomRow({super.key, this.title, this.value});
+  final String? value;
+  const CustomRow({super.key, this.title, this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class CustomRow extends StatelessWidget {
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         Text(
-          value.toString(),
+          value ?? "",
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         )
       ],

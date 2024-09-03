@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
 import 'package:mini_ecommerce/global_wiidgets/custom_button.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_textField.dart';
+import 'package:mini_ecommerce/global_wiidgets/custom_textfield.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 import 'package:mini_ecommerce/views/authentication/loginScreen/login_screen.dart';
 import 'package:mini_ecommerce/views/bottomNavBar/bottom_screen.dart';
-import 'package:mini_ecommerce/views/homScreen/home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -39,14 +39,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 Column(
                   children: [
-                    Text(
+                    const Text(
                       "Create Account",
                       style: TextStyle(
                           color: AppColors.primaryColor,
                           fontSize: 30,
                           fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Text(
@@ -58,7 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             color: Colors.black.withOpacity(0.5))),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 53,
                 ),
                 Form(
@@ -70,7 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         isRequired: true,
                         isSecured: false,
                         controller: userNamelClt),
-                    SizedBox(
+                    const SizedBox(
                       height: 26,
                     ),
                     CustomTextField(
@@ -79,7 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         isRequired: true,
                         isSecured: false,
                         controller: emailClt),
-                    SizedBox(
+                    const SizedBox(
                       height: 26,
                     ),
                     CustomTextField(
@@ -88,7 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       isSecured: true,
                       controller: passwordlClt,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 26,
                     ),
                     CustomTextField(
@@ -97,16 +97,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       isSecured: true,
                       controller: confirmpasswordlClt,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 53,
                     ),
                     CustomButton(
-                      buttonName: "Sign Up",
-                      onTap: () async {
+                      onClick: () async {
                         if (_formState.currentState!.validate()) {
                           if (passwordlClt.text != confirmpasswordlClt.text) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text("Password is not Matched")));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("Password is not Matched")));
                           } else {
                             try {
                               await _auth.createUserWithEmailAndPassword(
@@ -125,18 +125,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 'userName': userNamelClt.text,
                                 "email": emailClt.text
                               });
-                              Navigator.pushAndRemoveUntil(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return BottomBarScreen();
-                              }), (route) => false);
+                              Get.offAll(const BottomBarScreen());
+
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
+                                  const SnackBar(
                                       content:
                                           Text("Successfully Registered")));
                             } on FirebaseAuthException catch (e) {
                               if (e.code == "email-alredy-in-use") {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
+                                    const SnackBar(
                                         content: Text("Email alredy exsists")));
                               }
                             } catch (e) {
@@ -146,21 +144,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         }
                       },
+                      btnName: 'Register',
+                      width: 1,
+                      verticalPadding: 25,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 29,
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => LoginScreen()));
+                        Get.to(const LoginScreen());
                       },
-                      child: Text(
-                        "Already have an account",
+                      child: const Text(
+                        "Already have an account?",
                         style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.greyColor),
                       ),
                     ),
                   ]),

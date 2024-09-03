@@ -6,7 +6,7 @@ import 'package:mini_ecommerce/views/homScreen/home_screen.dart';
 import 'package:mini_ecommerce/views/personScreen/person_screen.dart';
 
 class BottomBarScreen extends StatefulWidget {
-  const BottomBarScreen({Key? key}) : super(key: key);
+  const BottomBarScreen({super.key});
 
   @override
   _BottomBarScreenState createState() => _BottomBarScreenState();
@@ -16,9 +16,9 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   int currentIdx = 0;
 
   List<Widget> myScreens = [
-    HomeScreen(),
-    SearchScreen(),
-    CartScreen(),
+    const HomeScreen(),
+    const SearchScreen(),
+    const CartScreen(),
     PersonScreen()
   ];
 

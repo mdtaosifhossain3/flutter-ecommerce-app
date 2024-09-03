@@ -25,7 +25,7 @@ class Categories extends StatelessWidget {
               ))
         ],
       ),
-      Container(
+      SizedBox(
         height: 64,
         child: StreamBuilder(
             stream:

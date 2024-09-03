@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
 import 'package:mini_ecommerce/global_wiidgets/custom_button.dart';
@@ -186,10 +185,18 @@ class _ProductDetailsSecreenState extends State<ProductDetailsSecreen> {
                     }),
               ),
               CustomButton(
-                  buttonName: "Add to Cart",
-                  onTap: () {
-                    cartProvider.addProduct(widget.product, selectedVariant);
-                  })
+                btnName: "Register",
+                textColor: Colors.white,
+                bgColor: AppColors.primaryColor,
+                onClick: () {
+                  cartProvider.addProduct(widget.product, selectedVariant);
+                },
+              )
+              // CustomButton(
+              //     buttonName: "Add to Cart",
+              //     onTap: () {
+              //       cartProvider.addProduct(widget.product, selectedVariant);
+              //     }, bgColor: null,)
             ]),
       ),
     );

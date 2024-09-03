@@ -4,7 +4,7 @@ import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
 
 class CategoryScreen extends StatelessWidget {
   final QueryDocumentSnapshot<Map<String, dynamic>> category;
-  CategoryScreen({Key? key, required this.category}) : super(key: key);
+  CategoryScreen({super.key, required this.category});
 
   final fireStore = FirebaseFirestore.instance;
 
@@ -19,7 +19,7 @@ class CategoryScreen extends StatelessWidget {
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }

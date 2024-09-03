@@ -5,13 +5,13 @@ import 'package:mini_ecommerce/views/productDetails/product_details_secreen.dart
 import 'package:shimmer/shimmer.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+  const SearchScreen({super.key});
 
   @override
-  _FavouriteScreenState createState() => _FavouriteScreenState();
+  FavouriteScreenState createState() => FavouriteScreenState();
 }
 
-class _FavouriteScreenState extends State<SearchScreen> {
+class FavouriteScreenState extends State<SearchScreen> {
   final textController = TextEditingController();
   @override
   Widget build(BuildContext context) {

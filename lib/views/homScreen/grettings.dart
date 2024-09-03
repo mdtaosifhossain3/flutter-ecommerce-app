@@ -9,7 +9,7 @@ class Grettings extends StatelessWidget {
     final userName = FirebaseAuth.instance.currentUser;
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Text(

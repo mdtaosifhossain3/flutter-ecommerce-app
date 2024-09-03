@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SliderScreen extends StatelessWidget {
-  List fireStoreSlides;
-  SliderScreen({super.key, required this.fireStoreSlides});
+  final List fireStoreSlides;
+  const SliderScreen({super.key, required this.fireStoreSlides});
 
   @override
   Widget build(BuildContext context) {

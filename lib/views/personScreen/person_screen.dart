@@ -1,26 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
 import 'package:mini_ecommerce/global_wiidgets/custom_row.dart';
 import 'package:mini_ecommerce/views/authentication/loginScreen/login_screen.dart';
 
-class PersonScreen extends StatefulWidget {
-  const PersonScreen({super.key});
+class PersonScreen extends StatelessWidget {
+  PersonScreen({super.key});
 
-  @override
-  _PersonScreenState createState() => _PersonScreenState();
-}
-
-class _PersonScreenState extends State<PersonScreen> {
   final user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    print(user);
+
     return Scaffold(
       appBar: customAppbar(context: context, action: [
         IconButton(
@@ -79,12 +71,12 @@ class _PersonScreenState extends State<PersonScreen> {
                               value: user!.phoneNumber ?? "",
                             ),
                             const Divider(),
-                            CustomRow(
+                            const CustomRow(
                               title: "Orders: ",
                               value: "5",
                             ),
                             const Divider(),
-                            CustomRow(
+                            const CustomRow(
                               title: "Add to Cart: ",
                               value: "5",
                             ),

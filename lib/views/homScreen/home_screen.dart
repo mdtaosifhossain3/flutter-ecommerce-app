@@ -1,28 +1,22 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
-import 'package:mini_ecommerce/utils/appConfig.dart';
-import 'package:mini_ecommerce/utils/colors.dart';
+import 'package:mini_ecommerce/utils/app_config.dart';
 import 'package:mini_ecommerce/views/authentication/loginScreen/login_screen.dart';
-import 'package:mini_ecommerce/views/categoryScreen/category_screen.dart';
 import 'package:mini_ecommerce/views/homScreen/categories.dart';
 import 'package:mini_ecommerce/views/homScreen/grettings.dart';
 import 'package:mini_ecommerce/views/homScreen/product_screen.dart';
 import 'package:mini_ecommerce/views/homScreen/slider.dart';
-import 'package:mini_ecommerce/views/productDetails/product_details_secreen.dart';
-import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
   final userName = FirebaseAuth.instance.currentUser;
 
   // List<Map<String, String>> products = [

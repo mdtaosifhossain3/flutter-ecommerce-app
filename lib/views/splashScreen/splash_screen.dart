@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mini_ecommerce/utils/appConfig.dart';
+import 'package:mini_ecommerce/utils/app_config.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 import 'package:mini_ecommerce/views/bottomNavBar/bottom_screen.dart';
 import 'package:mini_ecommerce/views/welcomeScreen/welcome_screen.dart';
@@ -11,10 +11,10 @@ class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  SplashScreenState createState() => SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class SplashScreenState extends State<SplashScreen> {
   final _user = FirebaseAuth.instance.currentUser;
 
   @override
@@ -39,7 +39,9 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Text(
           AppConfig.appName,
           style: const TextStyle(
-              color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
+              fontSize: 38.00,
+              fontWeight: FontWeight.w500,
+              color: AppColors.whiteColor),
         ),
       ),
     );
