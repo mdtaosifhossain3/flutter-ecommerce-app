@@ -8,6 +8,7 @@ class Grettings extends StatelessWidget {
   Widget build(BuildContext context) {
     final userName = FirebaseAuth.instance.currentUser;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(
           height: 20,

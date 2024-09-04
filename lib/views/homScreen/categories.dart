@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 import 'package:mini_ecommerce/views/categoryScreen/category_screen.dart';
 import 'package:shimmer/shimmer.dart';
@@ -10,20 +11,23 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            "Top Categories",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-          ),
-          TextButton(
-              onPressed: () {},
-              child: Text(
-                "See All",
-                style: TextStyle(color: AppColors.primaryColor),
-              ))
-        ],
+      Padding(
+        padding: const EdgeInsets.only(left: 15.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Top Categories",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+            TextButton(
+                onPressed: () {},
+                child: const Text(
+                  "See All",
+                  style: TextStyle(color: AppColors.primaryColor),
+                ))
+          ],
+        ),
       ),
       SizedBox(
         height: 64,
@@ -50,7 +54,8 @@ class Categories extends StatelessWidget {
                       }),
                 );
               } else {
-                return SizedBox(
+                return Container(
+                  margin: const EdgeInsets.only(left: 15),
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       primary: false,
@@ -59,23 +64,19 @@ class Categories extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) {
-                              return CategoryScreen(
-                                category: snapshot.data!.docs[index],
-                              );
-                            }));
+                            Get.to(CategoryScreen(
+                              category: snapshot.data!.docs[index],
+                            ));
                           },
                           child: Container(
-                            margin: const EdgeInsets.only(right: 10.00),
+                            margin: const EdgeInsets.only(right: 10),
                             width: 64,
                             padding: const EdgeInsets.all(8.00),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: const Color(0xfff2f2f2),
+                                color: AppColors.categoryBoxColor,
+                                borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
-                                    color: Colors.grey.withOpacity(.5),
-                                    width: 2.00)),
+                                    color: AppColors.greyColor, width: 1.00)),
                             child: Image.network(
                               snapshot.data!.docs[index]['icon']!,
                             ),

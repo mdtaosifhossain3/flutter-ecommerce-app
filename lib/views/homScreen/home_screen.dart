@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
+import 'package:mini_ecommerce/global_wiidgets/text_widget.dart';
 import 'package:mini_ecommerce/utils/app_config.dart';
 import 'package:mini_ecommerce/views/authentication/loginScreen/login_screen.dart';
 import 'package:mini_ecommerce/views/homScreen/categories.dart';
 import 'package:mini_ecommerce/views/homScreen/grettings.dart';
 import 'package:mini_ecommerce/views/homScreen/product_screen.dart';
 import 'package:mini_ecommerce/views/homScreen/slider.dart';
+import 'package:mini_ecommerce/views/welcomeScreen/welcome_screen.dart';
+import 'package:mini_ecommerce/widgets/drawer_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -159,43 +163,46 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: customAppbar(
-          bgColor: Colors.white,
-          context: context,
-          title: AppConfig.appName,
-          isLeadin: const Icon(Icons.menu),
-          action: [
+      drawer: const DrawerWidget(),
+      appBar: AppBar(
+          title: TextWidget(
+            label: AppConfig.appName,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+          ),
+          centerTitle: true,
+          actions: [
             IconButton(
                 padding: const EdgeInsets.only(right: 10.00),
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
-                  Navigator.pushAndRemoveUntil(context,
-                      MaterialPageRoute(builder: (_) {
-                    return const LoginScreen();
-                  }), (route) => false);
+                  Get.to(const WelcomeScreen());
                 },
                 icon: const Icon(Icons.logout))
           ]),
-      body: Padding(
-          padding:
-              const EdgeInsets.only(bottom: 15.00, left: 10.00, right: 10.00),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                //Grettings
-                const Grettings(),
-                //slider
-                SliderScreen(
-                  fireStoreSlides: fireStoreSlides,
-                ),
-                //categories
-                const Categories(),
-                //Products
-                const ProductScreen()
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //Grettings
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0, bottom: 10),
+              child: Grettings(),
             ),
-          )),
+            //slider
+            SliderScreen(
+              fireStoreSlides: fireStoreSlides,
+            ),
+            //categories
+            const Categories(),
+            const SizedBox(
+              height: 15.00,
+            ),
+            //Products
+            const ProductScreen()
+          ],
+        ),
+      ),
     );
   }
 }

@@ -14,4 +14,5 @@ class AppColors {
   static const googleButtonColor = Color(0xffEA4335);
 
   static const inputBorderColor = Color(0xffE7E8EA);
+  static const categoryBoxColor = Color(0xffF5F6FA);
 }
