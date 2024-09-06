@@ -20,6 +20,7 @@ class TextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (icon != null) Image.asset(icon.toString()),
         SizedBox(

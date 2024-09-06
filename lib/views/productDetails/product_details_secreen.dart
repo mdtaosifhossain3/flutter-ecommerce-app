@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mini_ecommerce/controllers/cart_controller.dart';
 import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
 import 'package:mini_ecommerce/global_wiidgets/custom_button.dart';
-import 'package:mini_ecommerce/providers/cart_provider.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
-import 'package:provider/provider.dart';
+import 'package:mini_ecommerce/views/cartScreen/cart_screen.dart';
 
 class ProductDetailsSecreen extends StatefulWidget {
   final QueryDocumentSnapshot<Map<String, dynamic>> product;
@@ -17,6 +18,7 @@ class ProductDetailsSecreen extends StatefulWidget {
 
 class _ProductDetailsSecreenState extends State<ProductDetailsSecreen> {
   final List<String> productVariant = ['35', "38", '45', "48", "52", "58"];
+  CartController cartController = Get.put(CartController());
 
   final user = FirebaseAuth.instance.currentUser;
 
@@ -40,7 +42,6 @@ class _ProductDetailsSecreenState extends State<ProductDetailsSecreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final cartProvider = Provider.of<CartProvider>(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -111,11 +112,11 @@ class _ProductDetailsSecreenState extends State<ProductDetailsSecreen> {
                         style: const TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold),
                       ),
-                      Text(
+                      const Text(
                         "Available in stock",
                         style: TextStyle(
-                            color: Colors.black.withOpacity(0.6),
-                            fontWeight: FontWeight.w500),
+                          color: AppColors.greyColor,
+                        ),
                       )
                     ],
                   ),
@@ -184,19 +185,17 @@ class _ProductDetailsSecreenState extends State<ProductDetailsSecreen> {
                       );
                     }),
               ),
-              CustomButton(
-                btnName: "Register",
-                textColor: Colors.white,
-                bgColor: AppColors.primaryColor,
-                onClick: () {
-                  cartProvider.addProduct(widget.product, selectedVariant);
-                },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: CustomButton(
+                  btnName: "Add to Cart",
+                  width: 1,
+                  onClick: () {
+                    cartController.addProduct(widget.product, selectedVariant);
+                    Get.to(const CartScreen());
+                  },
+                ),
               )
-              // CustomButton(
-              //     buttonName: "Add to Cart",
-              //     onTap: () {
-              //       cartProvider.addProduct(widget.product, selectedVariant);
-              //     }, bgColor: null,)
             ]),
       ),
     );

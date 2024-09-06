@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
 import 'package:mini_ecommerce/views/productDetails/product_details_secreen.dart';
 import 'package:shimmer/shimmer.dart';
@@ -92,18 +93,15 @@ class FavouriteScreenState extends State<SearchScreen> {
                                   } else if (name
                                       .toLowerCase()
                                       .contains(textController.text)) {
-                                    return InkWell(
-                                      onTap: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (_) {
-                                          return ProductDetailsSecreen(
-                                            product: data,
-                                          );
-                                        }));
-                                      },
-                                      child: Card(
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 8),
+                                    return Card(
+                                      elevation: 1,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 8),
+                                      child: InkWell(
+                                        onTap: () {
+                                          Get.to(ProductDetailsSecreen(
+                                              product: data));
+                                        },
                                         child: ListTile(
                                           leading: Container(
                                             height: 50,
