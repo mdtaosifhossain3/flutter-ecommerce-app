@@ -3,10 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_ecommerce/controllers/cart_controller.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_button.dart';
+import 'package:mini_ecommerce/global_widgets/custom_appbar.dart';
+import 'package:mini_ecommerce/global_widgets/custom_button.dart';
+import 'package:mini_ecommerce/global_widgets/text_widget.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 import 'package:mini_ecommerce/views/cartScreen/cart_screen.dart';
+import 'package:mini_ecommerce/views/reviewScreen/review_screen.dart';
+import 'package:mini_ecommerce/widgets/review_widget.dart';
 
 class ProductDetailsSecreen extends StatefulWidget {
   final QueryDocumentSnapshot<Map<String, dynamic>> product;
@@ -24,6 +27,7 @@ class _ProductDetailsSecreenState extends State<ProductDetailsSecreen> {
 
   int selectedFieldIndex = 0;
   String? selectedVariant;
+  bool isExpanded = false;
 
   void changeSelectedVariant() {
     setState(() {
@@ -45,7 +49,7 @@ class _ProductDetailsSecreenState extends State<ProductDetailsSecreen> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: customAppbar(context: context, bgColor: Colors.transparent),
+      appBar: customAppbar(context: context, title: "Product Info"),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,16 +130,69 @@ class _ProductDetailsSecreenState extends State<ProductDetailsSecreen> {
                   ),
                   const Text(
                     "About",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    widget.product["desc"]!,
-                    style: TextStyle(color: Colors.black.withOpacity(0.5)),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
 
                   const SizedBox(
-                    height: 10.00,
+                    height: 8,
                   ),
+
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                      });
+                    },
+                    child: AnimatedCrossFade(
+                      firstChild: Text(
+                        widget.product["desc"]!,
+                        maxLines: 10,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontSize: 14, color: AppColors.greyColor),
+                      ),
+                      secondChild: Text(
+                        widget.product["desc"]!,
+                        style: const TextStyle(
+                            fontSize: 14, color: AppColors.greyColor),
+                      ),
+                      crossFadeState: isExpanded
+                          ? CrossFadeState.showSecond
+                          : CrossFadeState.showFirst,
+                      duration: const Duration(milliseconds: 200),
+                    ),
+                  ),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            Get.to(AddReviewPage());
+                          },
+                          child: TextWidget(
+                            label: "Add Review",
+                          ))
+                    ],
+                  ),
+                  ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: 2,
+                      primary: false,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return const ReviewWidget(
+                          imageUrl: 'https://via.placeholder.com/150',
+                          userName: 'John Doe',
+                          rating: 4.5,
+                          reviewTime: '2 days ago',
+                          description:
+                              'This is a very detailed review of the product. It has more content when expanded.expandedexpandedexpandedexpandedexpanded',
+                        );
+                      }),
                 ],
               ),
             )

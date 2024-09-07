@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_ecommerce/controllers/cart_controller.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_button.dart';
-import 'package:mini_ecommerce/global_wiidgets/text_widget.dart';
+import 'package:mini_ecommerce/global_widgets/custom_button.dart';
+import 'package:mini_ecommerce/global_widgets/text_widget.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 
 class CartScreen extends StatefulWidget {
@@ -30,6 +30,7 @@ class _CartScreenState extends State<CartScreen> {
           } else if (cartController.cartItems.isEmpty) {
             return const Center(
                 child: TextWidget(
+              mainAxisAlignment: MainAxisAlignment.center,
               label: 'No items in cart',
               color: AppColors.greyColor,
               fontSize: 15,

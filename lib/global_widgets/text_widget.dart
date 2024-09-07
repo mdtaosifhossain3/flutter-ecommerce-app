@@ -8,6 +8,7 @@ class TextWidget extends StatelessWidget {
   final FontWeight? fontWeight;
   final TextAlign? textAlign;
   final String? icon;
+  final MainAxisAlignment? mainAxisAlignment;
   const TextWidget(
       {super.key,
       this.color,
@@ -15,15 +16,16 @@ class TextWidget extends StatelessWidget {
       this.fontWeight,
       this.textAlign,
       this.icon,
+      this.mainAxisAlignment,
       required this.label});
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
       children: [
         if (icon != null) Image.asset(icon.toString()),
-        SizedBox(
+        const SizedBox(
           width: 5,
         ),
         Text(

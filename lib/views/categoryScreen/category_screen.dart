@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
+import 'package:mini_ecommerce/global_widgets/custom_appbar.dart';
 
 class CategoryScreen extends StatelessWidget {
   final QueryDocumentSnapshot<Map<String, dynamic>> category;

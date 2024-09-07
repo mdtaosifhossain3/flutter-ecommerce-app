@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_row.dart';
+import 'package:mini_ecommerce/global_widgets/custom_appbar.dart';
+import 'package:mini_ecommerce/global_widgets/custom_row.dart';
 import 'package:mini_ecommerce/views/authentication/loginScreen/login_screen.dart';
 
 class PersonScreen extends StatelessWidget {

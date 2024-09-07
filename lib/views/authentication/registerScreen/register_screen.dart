@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_button.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_textfield.dart';
+import 'package:mini_ecommerce/global_widgets/custom_appbar.dart';
+import 'package:mini_ecommerce/global_widgets/custom_button.dart';
+import 'package:mini_ecommerce/global_widgets/custom_textfield.dart';
+import 'package:mini_ecommerce/services/register_service.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 import 'package:mini_ecommerce/views/authentication/loginScreen/login_screen.dart';
 import 'package:mini_ecommerce/views/bottomNavBar/bottom_screen.dart';
@@ -18,11 +19,14 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formState = GlobalKey<FormState>();
-  final _auth = FirebaseAuth.instance;
+
   final userNamelClt = TextEditingController();
   final emailClt = TextEditingController();
   final passwordlClt = TextEditingController();
   final confirmpasswordlClt = TextEditingController();
+
+  final RegisterService _registerService = RegisterService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,48 +105,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 53,
                     ),
                     CustomButton(
-                      onClick: () async {
-                        if (_formState.currentState!.validate()) {
-                          if (passwordlClt.text != confirmpasswordlClt.text) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text("Password is not Matched")));
-                          } else {
-                            try {
-                              await _auth.createUserWithEmailAndPassword(
-                                  email: emailClt.text,
-                                  password: passwordlClt.text);
-
-                              await FirebaseAuth.instance.currentUser!
-                                  .updateDisplayName(userNamelClt.text);
-                              await FirebaseAuth.instance.currentUser!
-                                  .updateEmail(emailClt.text);
-
-                              FirebaseFirestore.instance
-                                  .collection("user")
-                                  .doc(emailClt.text)
-                                  .set({
-                                'userName': userNamelClt.text,
-                                "email": emailClt.text
-                              });
-                              Get.offAll(const BottomBarScreen());
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content:
-                                          Text("Successfully Registered")));
-                            } on FirebaseAuthException catch (e) {
-                              if (e.code == "email-alredy-in-use") {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text("Email alredy exsists")));
-                              }
-                            } catch (e) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(e.toString())));
-                            }
-                          }
-                        }
+                      onClick: () {
+                        _registerService.regiser(
+                          context,
+                          passwordlClt,
+                          confirmpasswordlClt,
+                          emailClt,
+                          userNamelClt,
+                          _formState,
+                        );
                       },
                       btnName: 'Register',
                       width: 1,

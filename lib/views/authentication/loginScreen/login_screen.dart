@@ -1,12 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_appbar.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_button.dart';
-import 'package:mini_ecommerce/global_wiidgets/custom_textfield.dart';
+import 'package:mini_ecommerce/global_widgets/custom_appbar.dart';
+import 'package:mini_ecommerce/global_widgets/custom_button.dart';
+import 'package:mini_ecommerce/global_widgets/custom_textfield.dart';
+import 'package:mini_ecommerce/services/login_service.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 import 'package:mini_ecommerce/views/authentication/registerScreen/register_screen.dart';
-import 'package:mini_ecommerce/views/bottomNavBar/bottom_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,6 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordClt = TextEditingController();
 
   final _formState = GlobalKey<FormState>();
+
+  final LoginService _loginService = LoginService();
 
   @override
   Widget build(BuildContext context) {
@@ -88,26 +89,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ]),
               ),
               CustomButton(
-                onClick: () async {
-                  if (_formState.currentState!.validate()) {
-                    _formState.currentState!.save();
-
-                    try {
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
-                          email: emailClt.text, password: passwordClt.text);
-
-                      Get.offAll(const BottomBarScreen());
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Login Succesfully")));
-                    } on FirebaseAuthException catch (e) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(e.toString())));
-                    } catch (e) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(e.toString())));
-                    }
-                  }
+                onClick: () {
+                  _loginService.login(
+                      context, _formState, emailClt, passwordClt);
                 },
                 btnName: 'Login',
                 width: 1,
