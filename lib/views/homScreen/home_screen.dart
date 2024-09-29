@@ -39,16 +39,16 @@ class HomeScreenState extends State<HomeScreen> {
             label: AppConfig.appName,
             fontWeight: FontWeight.bold,
             fontSize: 24,
+            mainAxisAlignment: MainAxisAlignment.center,
           ),
           centerTitle: true,
           actions: [
-            IconButton(
-                padding: const EdgeInsets.only(right: 10.00),
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                  Get.to(const WelcomeScreen());
-                },
-                icon: const Icon(Icons.logout))
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0),
+              child: InkWell(
+                child: Image.asset("assets/icons/Bag.png"),
+              ),
+            )
           ]),
       body: const SingleChildScrollView(
         child: Column(

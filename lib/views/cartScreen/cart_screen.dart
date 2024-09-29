@@ -5,6 +5,7 @@ import 'package:mini_ecommerce/controllers/cart_controller.dart';
 import 'package:mini_ecommerce/global_widgets/custom_button.dart';
 import 'package:mini_ecommerce/global_widgets/text_widget.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
+import 'package:mini_ecommerce/views/orderConfirmedScreen/order_confirmed_screen.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -154,14 +155,26 @@ class _CartScreenState extends State<CartScreen> {
 
                 //------------------------------Button-----------------------------
 
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: CustomButton(
-                    btnName: "Buy Now",
-                    onClick: cartController.cartItems.isEmpty ? null : () {},
-                    width: 1,
-                  ),
-                )
+                Obx(() {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: CustomButton(
+                      btnName: "Buy Now",
+                      onClick: cartController.cartItems.isEmpty
+                          ? () {
+                              print(cartController.cartItems.isEmpty);
+                              print(cartController.cartItems.length);
+                              Get.snackbar("", "Please add product first");
+                              return;
+                            }
+                          : () {
+                              Get.offAll(OrderConfirmedScreen());
+                              return;
+                            },
+                      width: 1,
+                    ),
+                  );
+                })
               ]),
         ));
   }

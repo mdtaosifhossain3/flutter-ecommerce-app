@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 PreferredSizeWidget customAppbar(
     {String? title,
     List<Widget>? action,
-    Widget? isLeadin,
+    Widget? isLeading,
     required BuildContext context,
     Color? bgColor}) {
   return AppBar(
     backgroundColor: bgColor,
     elevation: 3.00,
     centerTitle: true,
-    leading: isLeadin ??
+    leading: isLeading ??
         IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              Get.back();
             },
             icon: const Icon(
               Icons.arrow_back_ios_new_outlined,

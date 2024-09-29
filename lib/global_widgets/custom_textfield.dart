@@ -7,18 +7,20 @@ class CustomTextField extends StatelessWidget {
   final bool? isRequired;
   final bool? isSecured;
   final TextEditingController? controller;
+  final String? initialValue;
   const CustomTextField(
       {super.key,
       this.isTransparent = true,
       this.hintTextName,
       this.isRequired,
+      this.initialValue,
       required this.isSecured,
       required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller!,
+      controller: controller!..text = initialValue ?? '',
       validator: isRequired == true
           ? (val) {
               if (val!.isEmpty) {

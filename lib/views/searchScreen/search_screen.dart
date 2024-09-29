@@ -17,7 +17,10 @@ class FavouriteScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppbar(context: context, title: "Search"),
+      appBar: customAppbar(
+          context: context,
+          isLeading: const SizedBox.shrink(),
+          title: "Search"),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(15.0),

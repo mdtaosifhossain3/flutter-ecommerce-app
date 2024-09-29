@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mini_ecommerce/models/address_model.dart';
 import 'package:mini_ecommerce/views/bottomNavBar/bottom_screen.dart';
+import 'package:uuid/uuid.dart';
 
 class RegisterService {
+  final Uuid _uuid = Uuid();
+  bool isLoading = false;
   regiser(context, passwordlClt, confirmpasswordlClt, emailClt, userNamelClt,
       formState) async {
     if (formState.currentState!.validate()) {
@@ -25,26 +31,70 @@ class RegisterService {
               );
             });
         try {
+          isLoading = true;
           final auth = FirebaseAuth.instance;
-          await auth.createUserWithEmailAndPassword(
+
+          final cred = await auth.createUserWithEmailAndPassword(
               email: emailClt.text, password: passwordlClt.text);
 
-          await FirebaseAuth.instance.currentUser!
-              .updateDisplayName(userNamelClt.text);
+          if (cred.user != null) {
+            await FirebaseAuth.instance.currentUser!
+                .updateDisplayName(userNamelClt.text);
+            Address address = Address(
+              id: _uuid.v4(),
+              userId: cred.user!.uid,
+              fullName: "",
+              addressLine1: '',
+              addressLine2: '',
+              city: '',
+              state: '',
+              postalCode: '',
+              country: '',
+              phoneNumber: '',
+              isDefault: true,
+            );
 
-          FirebaseFirestore.instance
-              .collection("user")
-              .doc(emailClt.text)
-              .set({'userName': userNamelClt.text, "email": emailClt.text});
-          Get.offAll(const BottomBarScreen());
+            // Convert to map
+            Map<String, dynamic> addressMap = address.toMap();
 
-          Get.snackbar("", "Successfully Registered");
-        } on FirebaseAuthException catch (e) {
-          if (e.code == "email-alredy-in-use") {
-            Get.snackbar("", "Email alredy exsists");
+            await FirebaseFirestore.instance
+                .collection("user")
+                .doc(emailClt.text)
+                .set({
+              'userName': userNamelClt.text,
+              "email": emailClt.text,
+              "photoURL": "",
+              "address": addressMap
+            });
+            // Dismiss the loading dialog when successful
+            Navigator.pop(context);
+            Get.offAll(const BottomBarScreen());
+
+            isLoading = false;
+            Get.snackbar("", "Successfully Registered");
+            return "Success";
           }
+
+          return;
+        } on FirebaseAuthException catch (e) {
+          Navigator.pop(context);
+          if (e.code == 'email-already-in-use') {
+            Get.snackbar("Error", "The account already exists for that email.");
+
+            return;
+          } else if (e.code == 'weak-password') {
+            Get.snackbar("Error", "The password provided is too weak.");
+            return;
+          }
+        } on SocketException catch (e) {
+          Navigator.pop(context);
+          Get.snackbar("Error", "Time Out");
+          print(e);
+          return;
         } catch (e) {
+          Navigator.pop(context);
           Get.snackbar("Error", e.toString());
+          return;
         }
       }
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 import 'package:mini_ecommerce/views/cartScreen/cart_screen.dart';
+import 'package:mini_ecommerce/views/personScreen/person.dart';
 import 'package:mini_ecommerce/views/searchScreen/search_screen.dart';
 import 'package:mini_ecommerce/views/homScreen/home_screen.dart';
 import 'package:mini_ecommerce/views/personScreen/person_screen.dart';
@@ -19,7 +20,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     const HomeScreen(),
     const SearchScreen(),
     const CartScreen(),
-    PersonScreen()
+    ProfilePage()
   ];
 
   @override

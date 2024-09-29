@@ -14,7 +14,7 @@ class Grettings extends StatelessWidget {
           height: 20,
         ),
         Text(
-          userName!.displayName!,
+          userName!.displayName ?? "User",
           style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
         ),
         Text(
