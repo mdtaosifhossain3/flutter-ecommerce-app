@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 
 class ReviewWidget extends StatefulWidget {
-  final String imageUrl;
+  final String photoURL;
   final String userName;
   final double rating;
   final String reviewTime;
@@ -10,7 +10,7 @@ class ReviewWidget extends StatefulWidget {
 
   const ReviewWidget({
     super.key,
-    required this.imageUrl,
+    required this.photoURL,
     required this.userName,
     required this.rating,
     required this.reviewTime,
@@ -34,7 +34,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
           Row(
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(widget.imageUrl),
+                backgroundImage: NetworkImage(widget.photoURL),
               ),
               const SizedBox(width: 10),
               Column(

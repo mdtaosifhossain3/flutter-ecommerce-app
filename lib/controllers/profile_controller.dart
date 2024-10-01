@@ -9,13 +9,11 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 
 import 'package:image_picker/image_picker.dart';
-import 'package:mini_ecommerce/models/address_model.dart';
 
 class ProfileController extends GetxController {
   var user = FirebaseAuth.instance.currentUser;
   var displayName = ''.obs;
-  RxMap address = {}.obs;
-  var imageUrl = ''.obs;
+  var photoURL = ''.obs;
 
   @override
   void onInit() {
@@ -31,8 +29,7 @@ class ProfileController extends GetxController {
           .doc(user!.email)
           .get();
       displayName.value = doc['userName'] ?? 'Guest User';
-      address.value = doc['address'] ?? 'No Address';
-      imageUrl.value = doc['photoURL'] ?? user!.photoURL ?? '';
+      photoURL.value = doc['photoURL'] ?? user!.photoURL ?? '';
     }
   }
 
@@ -89,7 +86,7 @@ class ProfileController extends GetxController {
           .doc(user!.email)
           .update({'photoURL': url});
       user!.updatePhotoURL(url);
-      imageUrl.value = url;
+      photoURL.value = url;
       fetchUserData(); // Refresh data
     }
   }

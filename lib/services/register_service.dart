@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mini_ecommerce/models/address_model.dart';
 import 'package:mini_ecommerce/views/bottomNavBar/bottom_screen.dart';
 import 'package:uuid/uuid.dart';
 
@@ -40,22 +39,9 @@ class RegisterService {
           if (cred.user != null) {
             await FirebaseAuth.instance.currentUser!
                 .updateDisplayName(userNamelClt.text);
-            Address address = Address(
-              id: _uuid.v4(),
-              userId: cred.user!.uid,
-              fullName: "",
-              addressLine1: '',
-              addressLine2: '',
-              city: '',
-              state: '',
-              postalCode: '',
-              country: '',
-              phoneNumber: '',
-              isDefault: true,
-            );
 
             // Convert to map
-            Map<String, dynamic> addressMap = address.toMap();
+            //  Map<String, dynamic> addressMap = address.toMap();
 
             await FirebaseFirestore.instance
                 .collection("user")
@@ -64,7 +50,6 @@ class RegisterService {
               'userName': userNamelClt.text,
               "email": emailClt.text,
               "photoURL": "",
-              "address": addressMap
             });
             // Dismiss the loading dialog when successful
             Navigator.pop(context);

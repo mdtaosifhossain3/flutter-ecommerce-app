@@ -185,7 +185,7 @@ class _ProductDetailsSecreenState extends State<ProductDetailsSecreen> {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return const ReviewWidget(
-                          imageUrl: 'https://via.placeholder.com/150',
+                          photoURL: 'https://via.placeholder.com/150',
                           userName: 'John Doe',
                           rating: 4.5,
                           reviewTime: '2 days ago',

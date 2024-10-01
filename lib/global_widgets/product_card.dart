@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  final String imageUrl;
+  final String photoURL;
   final String title;
   final String price;
   final double rating;
 
   const ProductCard({
     super.key,
-    required this.imageUrl,
+    required this.photoURL,
     required this.title,
     required this.price,
     required this.rating,
@@ -32,8 +32,8 @@ class ProductCard extends StatelessWidget {
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(10.0)),
             child: Image.network(
-              imageUrl,
-              height: screenWidth * 0.4, // Responsive height
+              photoURL,
+              height: screenWidth * 0.39, // Responsive height
               width: double.infinity,
               fit: BoxFit.cover,
             ),

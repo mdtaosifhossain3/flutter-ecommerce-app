@@ -7,7 +7,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mini_ecommerce/controllers/profile_controller.dart';
 import 'package:mini_ecommerce/global_widgets/custom_appbar.dart';
-import 'package:mini_ecommerce/models/address_model.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 import 'package:mini_ecommerce/views/authentication/loginScreen/login_screen.dart';
 import 'package:mini_ecommerce/views/personScreen/address_card.dart';
@@ -43,8 +42,8 @@ class ProfilePage extends StatelessWidget {
                     onTap: controller.updateProfileImage,
                     child: CircleAvatar(
                       radius: 50,
-                      backgroundImage: controller.imageUrl.value.isNotEmpty
-                          ? NetworkImage(controller.imageUrl.value)
+                      backgroundImage: controller.photoURL.value.isNotEmpty
+                          ? NetworkImage(controller.photoURL.value)
                           : const AssetImage('assets/images/default_user.png')
                               as ImageProvider,
                       child: const Align(
@@ -89,16 +88,6 @@ class ProfilePage extends StatelessWidget {
                   onTap: () {
                     // Navigate to order details if needed
                     Get.to(AddressCard(
-                      address: Address(
-                          id: "1",
-                          userId: "18456454",
-                          fullName: "fullName",
-                          addressLine1: "addressLine1",
-                          city: "city",
-                          state: "state",
-                          postalCode: "postalCode",
-                          country: "country",
-                          phoneNumber: "phoneNumber"),
                       onEdit: () {},
                       onAdd: () {},
                       onDelete: () {},
@@ -154,3 +143,14 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
+
+
+
+  //  address: Address(
+  //                         fullName: "fullName",
+  //                         addressLine1: "addressLine1",
+  //                         city: "city",
+  //                         state: "state",
+  //                         postalCode: "postalCode",
+  //                         country: "country",
+  //                         phoneNumber: "phoneNumber"),

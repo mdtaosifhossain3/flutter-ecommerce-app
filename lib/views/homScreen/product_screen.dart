@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mini_ecommerce/views/homScreen/product_card.dart';
+import 'package:mini_ecommerce/global_widgets/product_card.dart';
 import 'package:mini_ecommerce/views/productDetails/product_details_secreen.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -75,7 +75,7 @@ class ProductScreen extends StatelessWidget {
                               ));
                             },
                             child: ProductCard(
-                              imageUrl: data['image'],
+                              photoURL: data['image'],
                               title: data['name'] ?? "Ttile",
                               price: "\$ 855",
                               rating: 1.5,

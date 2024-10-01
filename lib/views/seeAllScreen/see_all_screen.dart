@@ -4,23 +4,27 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:mini_ecommerce/global_widgets/custom_appbar.dart';
 import 'package:mini_ecommerce/global_widgets/product_card.dart';
+import 'package:mini_ecommerce/views/categoryScreen/category_screen.dart';
 import 'package:mini_ecommerce/views/productDetails/product_details_secreen.dart';
 
-class CategoryScreen extends StatelessWidget {
-  final QueryDocumentSnapshot<Map<String, dynamic>> category;
-  CategoryScreen({super.key, required this.category});
+class SeeAllScreen extends StatelessWidget {
+  final String screenName;
+  final bool isCategoryScreen;
+
+  SeeAllScreen({
+    super.key,
+    required this.screenName,
+    required this.isCategoryScreen,
+  });
 
   final fireStore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppbar(context: context, title: category['name']),
+      appBar: customAppbar(context: context, title: screenName),
       body: StreamBuilder(
-          stream: fireStore
-              .collection('products')
-              .where('cat_id', isEqualTo: category['id'])
-              .snapshots(),
+          stream: fireStore.collection(screenName).snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -44,18 +48,29 @@ class CategoryScreen extends StatelessWidget {
                   primary: false,
                   itemBuilder: (context, index) {
                     final data = snapshot.data!.docs[index];
-                    return GestureDetector(
-                        onTap: () {
-                          Get.to(ProductDetailsSecreen(
-                            product: data,
-                          ));
-                        },
-                        child: ProductCard(
-                          photoURL: data['image'],
-                          title: data['name'] ?? "Ttile",
-                          price: "\$ 855",
-                          rating: 1.5,
-                        ));
+                    return isCategoryScreen
+                        ? GestureDetector(
+                            onTap: () {
+                              Get.to(ProductDetailsSecreen(
+                                product: data,
+                              ));
+                            },
+                            child: ProductCard(
+                              photoURL: data['image'],
+                              title: data['name'] ?? "Ttile",
+                              price: "\$ 855",
+                              rating: 1.5,
+                            ))
+                        : GestureDetector(
+                            onTap: () {
+                              Get.to(CategoryScreen(
+                                category: data,
+                              ));
+                            },
+                            child: Card(
+                              child: Image.network(data['icon']),
+                            ),
+                          );
                   });
             });
           }),
