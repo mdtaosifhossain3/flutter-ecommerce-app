@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:mini_ecommerce/global_widgets/custom_appbar.dart';
 import 'package:mini_ecommerce/global_widgets/product_card.dart';
 import 'package:mini_ecommerce/views/productDetails/product_details_secreen.dart';

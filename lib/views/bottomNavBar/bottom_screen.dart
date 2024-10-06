@@ -4,7 +4,6 @@ import 'package:mini_ecommerce/views/cartScreen/cart_screen.dart';
 import 'package:mini_ecommerce/views/personScreen/person.dart';
 import 'package:mini_ecommerce/views/searchScreen/search_screen.dart';
 import 'package:mini_ecommerce/views/homScreen/home_screen.dart';
-import 'package:mini_ecommerce/views/personScreen/person_screen.dart';
 
 class BottomBarScreen extends StatefulWidget {
   const BottomBarScreen({super.key});

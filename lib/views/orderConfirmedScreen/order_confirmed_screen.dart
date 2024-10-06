@@ -4,7 +4,6 @@ import 'package:mini_ecommerce/global_widgets/custom_button.dart';
 import 'package:mini_ecommerce/global_widgets/text_widget.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 import 'package:mini_ecommerce/views/bottomNavBar/bottom_screen.dart';
-import 'package:mini_ecommerce/views/homScreen/home_screen.dart';
 
 class OrderConfirmedScreen extends StatelessWidget {
   const OrderConfirmedScreen({super.key});

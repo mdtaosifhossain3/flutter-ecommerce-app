@@ -98,9 +98,13 @@ class CartController extends GetxController {
                 (item["quantity"]?.toDouble()));
       });
       totalAmount.value = amount;
-      print("The is the calucation amount: $amount");
+      if (kDebugMode) {
+        print("The is the calucation amount: $amount");
+      }
     } catch (e) {
-      print("Error calculating total amount: $e");
+      if (kDebugMode) {
+        print("Error calculating total amount: $e");
+      }
     }
   }
 }

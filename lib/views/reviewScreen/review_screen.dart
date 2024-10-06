@@ -3,7 +3,7 @@ import 'package:mini_ecommerce/global_widgets/custom_appbar.dart';
 import 'package:mini_ecommerce/global_widgets/custom_button.dart';
 
 class AddReviewPage extends StatefulWidget {
-  const AddReviewPage({Key? key}) : super(key: key);
+  const AddReviewPage({super.key});
 
   @override
   _AddReviewPageState createState() => _AddReviewPageState();

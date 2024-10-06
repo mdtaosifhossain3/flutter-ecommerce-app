@@ -77,7 +77,7 @@ class ProductScreen extends StatelessWidget {
                             child: ProductCard(
                               photoURL: data['image'],
                               title: data['name'] ?? "Ttile",
-                              price: "\$ 855",
+                              price: data['price'],
                               rating: 1.5,
                             ));
                       });

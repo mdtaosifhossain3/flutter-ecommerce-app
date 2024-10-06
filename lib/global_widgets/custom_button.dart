@@ -8,7 +8,7 @@ class CustomButton extends StatelessWidget {
   final double? fontSize;
   final double? radius;
   final String? icon;
-  final width;
+  final double? width;
   final double? verticalPadding;
   final Function? onClick;
 
@@ -30,7 +30,7 @@ class CustomButton extends StatelessWidget {
     final size = MediaQuery.sizeOf(context).width;
 
     return SizedBox(
-      width: width != null ? size * width : size * .4,
+      width: width != null ? size * width! : size * .4,
       child: TextButton(
           onPressed: () {
             onClick!();

@@ -1,10 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mini_ecommerce/controllers/profile_controller.dart';
 import 'package:mini_ecommerce/global_widgets/custom_appbar.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
@@ -16,6 +12,8 @@ class ProfilePage extends StatelessWidget {
   final ProfileController controller = Get.put(ProfileController());
 
   final TextEditingController nameController = TextEditingController();
+
+  ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +76,7 @@ class ProfilePage extends StatelessWidget {
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     // Navigate to order details if needed
-                    Get.to(EditInfo());
+                    Get.to(const EditInfo());
                   },
                 ),
                 ListTile(
@@ -125,32 +123,4 @@ class ProfilePage extends StatelessWidget {
           )),
     );
   }
-
-  Widget _buildTextField({
-    required String label,
-    required TextEditingController controller,
-    String? initialValue,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: TextField(
-        controller: controller..text = initialValue ?? '',
-        decoration: InputDecoration(
-          labelText: label,
-          border: const OutlineInputBorder(),
-        ),
-      ),
-    );
-  }
 }
-
-
-
-  //  address: Address(
-  //                         fullName: "fullName",
-  //                         addressLine1: "addressLine1",
-  //                         city: "city",
-  //                         state: "state",
-  //                         postalCode: "postalCode",
-  //                         country: "country",
-  //                         phoneNumber: "phoneNumber"),

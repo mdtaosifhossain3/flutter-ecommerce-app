@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_ecommerce/global_widgets/custom_appbar.dart';
@@ -8,7 +6,6 @@ import 'package:mini_ecommerce/global_widgets/custom_textfield.dart';
 import 'package:mini_ecommerce/services/register_service.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 import 'package:mini_ecommerce/views/authentication/loginScreen/login_screen.dart';
-import 'package:mini_ecommerce/views/bottomNavBar/bottom_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

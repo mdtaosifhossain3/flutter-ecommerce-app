@@ -162,13 +162,11 @@ class _CartScreenState extends State<CartScreen> {
                       btnName: "Buy Now",
                       onClick: cartController.cartItems.isEmpty
                           ? () {
-                              print(cartController.cartItems.isEmpty);
-                              print(cartController.cartItems.length);
                               Get.snackbar("", "Please add product first");
                               return;
                             }
                           : () {
-                              Get.offAll(OrderConfirmedScreen());
+                              Get.offAll(const OrderConfirmedScreen());
                               return;
                             },
                       width: 1,

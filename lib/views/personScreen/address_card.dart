@@ -1,25 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mini_ecommerce/controllers/address_controller.dart';
 import 'package:mini_ecommerce/global_widgets/custom_appbar.dart';
 import 'package:mini_ecommerce/global_widgets/text_widget.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 
-class AddressCard extends StatelessWidget {
-  final user = FirebaseAuth.instance.currentUser!.email;
-
+class AddressCard extends StatefulWidget {
   final VoidCallback onEdit; // Callback for the Edit button
   final VoidCallback onAdd; // Callback for the Add button
   final VoidCallback onDelete; // Callback for the Delete button
 
-  AddressCard({
-    Key? key,
+  const AddressCard({
+    super.key,
     required this.onEdit,
     required this.onAdd,
     required this.onDelete,
-  }) : super(key: key);
+  });
+
+  @override
+  State<AddressCard> createState() => _AddressCardState();
+}
+
+class _AddressCardState extends State<AddressCard> {
+  final user = FirebaseAuth.instance.currentUser!.email;
+  AddressController addressController = Get.put(AddressController());
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +174,7 @@ class AddressCard extends StatelessWidget {
                               ],
                             ),
 
-                            // const SizedBox(height: 16.0),
+                            const SizedBox(height: 16.0),
 
                             // Add, Edit, and Delete buttons
                             Positioned(
@@ -182,7 +188,11 @@ class AddressCard extends StatelessWidget {
                                         color: AppColors.greyColor,
                                         borderRadius: BorderRadius.circular(4)),
                                     child: InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        _showAddressDialog(
+                                            isEdit: true,
+                                            userAddress: userAddress);
+                                      },
                                       child: const Icon(
                                         Icons.edit,
                                         color: AppColors.whiteColor,
@@ -201,18 +211,8 @@ class AddressCard extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(4)),
                                     child: InkWell(
                                       onTap: () {
-                                        FirebaseFirestore.instance
-                                            .collection("user")
-                                            .doc(user!)
-                                            .collection("address")
-                                            .doc(userAddress.id)
-                                            .delete()
-                                            .then((_) {
-                                          print('Document deleted');
-                                        }).catchError((error) {
-                                          print(
-                                              'Failed to delete document: $error');
-                                        });
+                                        addressController
+                                            .deleteAddress(userAddress.id);
                                       },
                                       child: const Icon(
                                         Icons.delete,
@@ -232,8 +232,92 @@ class AddressCard extends StatelessWidget {
             }),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: onAdd,
-        child: Icon(Icons.add),
+        onPressed: () {
+          _showAddressDialog();
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  void _showAddressDialog({bool isEdit = false, userAddress}) {
+    Get.dialog(
+      AlertDialog(
+        title: Text(isEdit ? 'Edit Address' : "Add your Address"),
+        content: Form(
+          key: addressController.formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildTextField(
+                    'Address Line 1', addressController.addressLine1Controller,
+                    userData: userAddress['addressLine1']),
+                _buildTextField('Address Line 2 (Optional)',
+                    addressController.addressLine2Controller,
+                    required: false, userData: userAddress['addressLine2']),
+                _buildTextField('City', addressController.cityController,
+                    userData: userAddress['city']),
+                _buildTextField('Country', addressController.countryController,
+                    userData: userAddress['country']),
+                _buildTextField(
+                    'Full Name', addressController.fullNameController,
+                    userData: userAddress['fullName']),
+                _buildTextField(
+                    'Phone Number', addressController.phoneNumberController,
+                    userData: userAddress['phoneNumber']),
+                _buildTextField(
+                    'Postal Code', addressController.postalCodeController,
+                    userData: userAddress['postalCode']),
+                _buildTextField('State', addressController.stateController,
+                    userData: userAddress['state']),
+                Obx(() => CheckboxListTile(
+                      title: const Text('Set as Default'),
+                      value: addressController.isDefault.value,
+                      onChanged: (value) {
+                        addressController.isDefault.value = value!;
+                      },
+                    )),
+              ],
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              isEdit
+                  ? addressController.editForm(userAddress.id)
+                  : addressController.submitForm(); // Call controller method
+            },
+            child: const Text('Submit'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextField(String label, TextEditingController controller,
+      {bool required = true, userData}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: TextFormField(
+        controller: controller..text = userData ?? "",
+        decoration: InputDecoration(
+          labelText: label,
+          border: const OutlineInputBorder(),
+        ),
+        validator: (value) {
+          if (required && (value == null || value.isEmpty)) {
+            return '$label cannot be empty';
+          }
+          return null;
+        },
       ),
     );
   }

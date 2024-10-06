@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_ecommerce/controllers/profile_controller.dart';
@@ -7,7 +6,7 @@ import 'package:mini_ecommerce/global_widgets/custom_button.dart';
 import 'package:mini_ecommerce/global_widgets/text_widget.dart';
 
 class EditInfo extends StatefulWidget {
-  EditInfo({super.key});
+  const EditInfo({super.key});
 
   @override
   State<EditInfo> createState() => _EditInfoState();
@@ -111,7 +110,7 @@ Widget _buildTextField({
       controller: controller..text = initialValue ?? '',
       decoration: InputDecoration(
         labelText: label,
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
     ),
   );

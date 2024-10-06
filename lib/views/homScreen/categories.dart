@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
 import 'package:mini_ecommerce/views/categoryScreen/category_screen.dart';
-import 'package:mini_ecommerce/views/seeAllScreen/see_all_screen.dart';
+import 'package:mini_ecommerce/views/customScreen/custom_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Categories extends StatelessWidget {
@@ -23,9 +23,9 @@ class Categories extends StatelessWidget {
             ),
             TextButton(
                 onPressed: () {
-                  Get.to(SeeAllScreen(
+                  Get.to(CustomScreen(
                     screenName: "categories",
-                    isCategoryScreen: false,
+                    isCategoryScreen: true,
                   ));
                 },
                 child: const Text(

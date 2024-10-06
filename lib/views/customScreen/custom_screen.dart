@@ -1,17 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:mini_ecommerce/global_widgets/custom_appbar.dart';
 import 'package:mini_ecommerce/global_widgets/product_card.dart';
 import 'package:mini_ecommerce/views/categoryScreen/category_screen.dart';
 import 'package:mini_ecommerce/views/productDetails/product_details_secreen.dart';
 
-class SeeAllScreen extends StatelessWidget {
+class CustomScreen extends StatelessWidget {
   final String screenName;
   final bool isCategoryScreen;
 
-  SeeAllScreen({
+  CustomScreen({
     super.key,
     required this.screenName,
     required this.isCategoryScreen,
@@ -51,6 +50,16 @@ class SeeAllScreen extends StatelessWidget {
                     return isCategoryScreen
                         ? GestureDetector(
                             onTap: () {
+                              Get.to(CategoryScreen(
+                                category: data,
+                              ));
+                            },
+                            child: Card(
+                              child: Image.network(data['icon']),
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () {
                               Get.to(ProductDetailsSecreen(
                                 product: data,
                               ));
@@ -60,17 +69,7 @@ class SeeAllScreen extends StatelessWidget {
                               title: data['name'] ?? "Ttile",
                               price: "\$ 855",
                               rating: 1.5,
-                            ))
-                        : GestureDetector(
-                            onTap: () {
-                              Get.to(CategoryScreen(
-                                category: data,
-                              ));
-                            },
-                            child: Card(
-                              child: Image.network(data['icon']),
-                            ),
-                          );
+                            ));
                   });
             });
           }),

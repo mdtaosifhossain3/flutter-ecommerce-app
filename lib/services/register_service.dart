@@ -2,13 +2,12 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_ecommerce/views/bottomNavBar/bottom_screen.dart';
-import 'package:uuid/uuid.dart';
 
 class RegisterService {
-  final Uuid _uuid = Uuid();
   bool isLoading = false;
   regiser(context, passwordlClt, confirmpasswordlClt, emailClt, userNamelClt,
       formState) async {
@@ -74,7 +73,9 @@ class RegisterService {
         } on SocketException catch (e) {
           Navigator.pop(context);
           Get.snackbar("Error", "Time Out");
-          print(e);
+          if (kDebugMode) {
+            print(e);
+          }
           return;
         } catch (e) {
           Navigator.pop(context);

@@ -1,17 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:mini_ecommerce/global_widgets/text_widget.dart';
 import 'package:mini_ecommerce/utils/app_config.dart';
+import 'package:mini_ecommerce/utils/colors.dart';
+import 'package:mini_ecommerce/views/customScreen/custom_screen.dart';
 
 import 'package:mini_ecommerce/views/homScreen/categories.dart';
 import 'package:mini_ecommerce/views/homScreen/grettings.dart';
 import 'package:mini_ecommerce/views/homScreen/product_screen.dart';
 import 'package:mini_ecommerce/views/homScreen/slider.dart';
-
-import 'package:mini_ecommerce/views/welcomeScreen/welcome_screen.dart';
+import 'package:mini_ecommerce/views/wishListScreen/wishlist_screen.dart';
 import 'package:mini_ecommerce/widgets/drawer_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -46,7 +46,13 @@ class HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.only(right: 15.0),
               child: InkWell(
-                child: Image.asset("assets/icons/Bag.png"),
+                onTap: () {
+                  Get.to(WishlistScreen());
+                },
+                child: Image.asset(
+                  "assets/icons/Bag.png",
+                  color: AppColors.primaryColor,
+                ),
               ),
             )
           ]),

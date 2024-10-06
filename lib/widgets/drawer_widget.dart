@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mini_ecommerce/global_widgets/custom_textfield.dart';
 import 'package:mini_ecommerce/global_widgets/text_widget.dart';
 import 'package:mini_ecommerce/utils/app_config.dart';
 import 'package:mini_ecommerce/utils/colors.dart';

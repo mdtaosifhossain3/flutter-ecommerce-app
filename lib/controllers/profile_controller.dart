@@ -1,13 +1,10 @@
-import 'dart:ffi';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-
 import 'package:image_picker/image_picker.dart';
 
 class ProfileController extends GetxController {
@@ -65,7 +62,9 @@ class ProfileController extends GetxController {
     } catch (e) {
       Navigator.pop(context);
       Get.snackbar("Error", "Something Went Wrong. Please try again later");
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
