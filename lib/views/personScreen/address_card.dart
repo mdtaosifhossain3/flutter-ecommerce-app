@@ -233,7 +233,7 @@ class _AddressCardState extends State<AddressCard> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showAddressDialog();
+          _showAddressDialog(userAddress: {});
         },
         child: const Icon(Icons.add),
       ),

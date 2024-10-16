@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mini_ecommerce/models/address_model.dart';
 
 class AddressController extends GetxController {
   // Form key
@@ -39,17 +40,18 @@ class AddressController extends GetxController {
       try {
         if (user != null) {
           // Prepare address data
-          Map<String, dynamic> addressData = {
-            'addressLine1': addressLine1Controller.text,
-            'addressLine2': addressLine2Controller.text,
-            'city': cityController.text,
-            'country': countryController.text,
-            'fullName': fullNameController.text,
-            'isDefault': isDefault.value,
-            'phoneNumber': phoneNumberController.text,
-            'postalCode': postalCodeController.text,
-            'state': stateController.text,
-          };
+          final data = AddressModel(
+              addressLine1: addressLine1Controller.text,
+              addressLine2: addressLine2Controller.text,
+              city: cityController.text,
+              country: countryController.text,
+              fullName: fullNameController.text,
+              isDefault: isDefault.value,
+              phoneNumber: phoneNumberController.text,
+              postalCode: postalCodeController.text,
+              state: stateController.text);
+
+          final addressData = data.toJson();
 
           // Add address to Firestore
           await FirebaseFirestore.instance

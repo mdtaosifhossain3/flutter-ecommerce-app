@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mini_ecommerce/utils/colors.dart';
 
 class ProductCard extends StatelessWidget {
   final String photoURL;

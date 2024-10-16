@@ -8,7 +8,7 @@ import 'package:mini_ecommerce/global_widgets/product_card.dart';
 import 'package:mini_ecommerce/views/productDetails/product_details_secreen.dart';
 
 class WishlistScreen extends StatefulWidget {
-  WishlistScreen({super.key});
+  const WishlistScreen({super.key});
 
   @override
   State<WishlistScreen> createState() => _WishlistScreenState();
@@ -59,12 +59,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                       // Retrieve the first document or null if none exists
                       QueryDocumentSnapshot<Map<String, dynamic>>? doc =
                           snapshot.docs.isNotEmpty ? snapshot.docs.first : null;
-                      print(
-                          "sdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
-                      print(doc);
-                      print(data["key"]);
-                      print(
-                          "sdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+
                       Get.to(ProductDetailsSecreen(
                         sNO: data['sNo'],
                         product: doc,

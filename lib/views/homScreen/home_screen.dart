@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:mini_ecommerce/global_widgets/text_widget.dart';
 import 'package:mini_ecommerce/utils/app_config.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
-import 'package:mini_ecommerce/views/customScreen/custom_screen.dart';
 
 import 'package:mini_ecommerce/views/homScreen/categories.dart';
 import 'package:mini_ecommerce/views/homScreen/grettings.dart';

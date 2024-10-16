@@ -1,11 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mini_ecommerce/controllers/cart_controller.dart';
 import 'package:mini_ecommerce/global_widgets/custom_button.dart';
 import 'package:mini_ecommerce/global_widgets/text_widget.dart';
+import 'package:mini_ecommerce/models/address_model.dart';
+import 'package:mini_ecommerce/models/order_model.dart';
 import 'package:mini_ecommerce/utils/colors.dart';
-import 'package:mini_ecommerce/views/orderConfirmedScreen/order_confirmed_screen.dart';
+import 'package:mini_ecommerce/utils/enums.dart';
+import 'package:mini_ecommerce/views/ordersScreen/order_confirmed_screen.dart';
+import 'package:uuid/uuid.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -16,6 +21,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   final user = FirebaseAuth.instance.currentUser;
+  final uniqueProductId = const Uuid();
 
   CartController cartController = Get.put(CartController());
 
@@ -43,6 +49,10 @@ class _CartScreenState extends State<CartScreen> {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 final data = cartController.cartItems[index];
+                // Split text into words
+                final words = data["name"].split(" ");
+                // Show either the limited words or full text based on isExpanded
+                final displayText = words.take(3).join(" ");
 
                 return Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -68,7 +78,7 @@ class _CartScreenState extends State<CartScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(data["name"],
+                              Text(displayText,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 15,
@@ -165,7 +175,54 @@ class _CartScreenState extends State<CartScreen> {
                               Get.snackbar("", "Please add product first");
                               return;
                             }
-                          : () {
+                          : () async {
+                              final items = await FirebaseFirestore.instance
+                                  .collection("user")
+                                  .doc(user!.email)
+                                  .collection("cart")
+                                  .get();
+                              List<Items> products = [];
+                              for (var data in items.docs) {
+                                var item = Items(
+                                    price: double.parse(data["price"]),
+                                    productId: data["productId"].toString(),
+                                    productName: data["name"],
+                                    quantity: data["quantity"]);
+                                products.add(item);
+                              }
+                              final snapshot = await FirebaseFirestore.instance
+                                  .collection('user')
+                                  .doc(user!.email)
+                                  .collection("address")
+                                  .where('isDefault', isEqualTo: true)
+                                  .limit(1)
+                                  .get();
+                              final addressDoc = snapshot.docs.first;
+
+                              final shippingAddress = AddressModel(
+                                  addressLine1: addressDoc["addressLine1"],
+                                  addressLine2: addressDoc["addressLine2"],
+                                  city: addressDoc["city"],
+                                  country: addressDoc["country"],
+                                  fullName: addressDoc["fullName"],
+                                  isDefault: addressDoc["isDefault"],
+                                  phoneNumber: addressDoc["phoneNumber"],
+                                  postalCode: addressDoc["postalCode"],
+                                  state: addressDoc["state"]);
+                              final orderData = OrderModel(
+                                  orderId: uniqueProductId.v4(),
+                                  userId: user!.uid,
+                                  orderDate: DateTime.now(),
+                                  items: products,
+                                  totalAmount: cartController.totalAmount.value,
+                                  status: OrderStatus.pending,
+                                  shippingAddress: shippingAddress,
+                                  paymentMethod: PaymentMethod.bankTransfer,
+                                  paymentStatus: PaymentStatus.pending);
+
+                              FirebaseFirestore.instance
+                                  .collection("orders")
+                                  .add(orderData.toJson());
                               Get.offAll(const OrderConfirmedScreen());
                               return;
                             },
