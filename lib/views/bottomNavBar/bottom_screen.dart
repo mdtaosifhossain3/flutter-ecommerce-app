@@ -48,7 +48,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Person"),
         ],
       ),
-      body: myScreens[currentIdx],
+      body: SafeArea(child: myScreens[currentIdx]),
     );
   }
 }

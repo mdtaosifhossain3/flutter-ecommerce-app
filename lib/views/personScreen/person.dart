@@ -110,7 +110,6 @@ class ProfilePage extends StatelessWidget {
                     stream: FirebaseFirestore.instance
                         .collection("orders")
                         .where("userId", isEqualTo: user!.uid)
-                        .orderBy("orderDate")
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -120,17 +119,13 @@ class ProfilePage extends StatelessWidget {
                             child: CircularProgressIndicator(),
                           ),
                         );
-                      }
-
-                      if (!snapshot.hasData) {
+                      } else if (!snapshot.hasData) {
                         return const TextWidget(
                           label: "No data found",
                           mainAxisAlignment: MainAxisAlignment.center,
                           fontSize: 15,
                         );
-                      }
-
-                      if (snapshot.hasError) {
+                      } else if (snapshot.hasError) {
                         return const Center(
                           child: TextWidget(
                             label: "Something went wrong",
@@ -139,38 +134,39 @@ class ProfilePage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                           ),
                         );
-                      }
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: snapshot.data!.docs
-                            .length, // Replace with actual order count
-                        itemBuilder: (context, index) {
-                          final data = snapshot.data!.docs[index];
-                          final items = data["items"];
+                      } else {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: snapshot.data!.docs
+                              .length, // Replace with actual order count
+                          itemBuilder: (context, index) {
+                            final data = snapshot.data!.docs[index];
+                            final items = data["items"];
 
-                          return ListTile(
-                            leading: const Icon(Icons.shopping_bag),
-                            title: TextWidget(
-                              label: 'Order# ${index + 1}',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                            subtitle: TextWidget(
-                              label: 'Status: ${data["paymentStatus"]}',
-                              fontSize: 14,
-                            ),
-                            trailing: const Icon(Icons.arrow_forward_ios),
-                            onTap: () {
-                              // Navigate to order details if needed
-                              Get.to(OrderDetails(
-                                items: items,
-                                paymentStatus: data["paymentStatus"],
-                              ));
-                            },
-                          );
-                        },
-                      );
+                            return ListTile(
+                              leading: const Icon(Icons.shopping_bag),
+                              title: TextWidget(
+                                label: 'Order# ${index + 1}',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                              subtitle: TextWidget(
+                                label: 'Status: ${data["paymentStatus"]}',
+                                fontSize: 14,
+                              ),
+                              trailing: const Icon(Icons.arrow_forward_ios),
+                              onTap: () {
+                                // Navigate to order details if needed
+                                Get.to(OrderDetails(
+                                  items: items,
+                                  paymentStatus: data["paymentStatus"],
+                                ));
+                              },
+                            );
+                          },
+                        );
+                      }
                     })
                 // Replace this with actual order data from your database
               ],

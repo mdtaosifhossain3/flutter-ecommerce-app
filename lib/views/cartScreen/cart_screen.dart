@@ -12,6 +12,8 @@ import 'package:mini_ecommerce/utils/enums.dart';
 import 'package:mini_ecommerce/views/ordersScreen/order_confirmed_screen.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../global_widgets/custom_appbar.dart';
+
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
@@ -30,6 +32,9 @@ class _CartScreenState extends State<CartScreen> {
     final size = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
+        appBar: customAppbar(
+          context: context,
+        ),
         body: Obx(() {
           if (cartController.isLoading.value) {
             return const Center(
@@ -197,6 +202,13 @@ class _CartScreenState extends State<CartScreen> {
                                   .where('isDefault', isEqualTo: true)
                                   .limit(1)
                                   .get();
+                              if (snapshot.docs.isEmpty) {
+                                // Handle the case where no default address is found
+                                Get.snackbar("Error",
+                                    "No default address found! Please go to your profile screen and add an address.");
+                                return;
+                              }
+
                               final addressDoc = snapshot.docs.first;
 
                               final shippingAddress = AddressModel(
