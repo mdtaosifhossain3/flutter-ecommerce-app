@@ -18,19 +18,15 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppbar(context: context),
+      appBar: customAppbar(context: context, title: "Lets get started"),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const TextWidget(
-              label: "Let's Get Started",
-              fontWeight: FontWeight.bold,
-              fontSize: 28,
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
+            const SizedBox(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 children: [
                   CustomButton(
@@ -38,8 +34,12 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                     width: 1,
                     bgColor: AppColors.googleButtonColor,
                     icon: 'assets/icons/Google.png',
+                    onClick: () {
+                      Get.snackbar(
+                          "Message", "This Feature will be available soon.");
+                    },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   CustomButton(
@@ -47,8 +47,12 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                     width: 1,
                     icon: 'assets/icons/Facebook.png',
                     bgColor: AppColors.facebookButtonColor,
+                    onClick: () {
+                      Get.snackbar(
+                          "Message", "This Feature will be available soon.");
+                    },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   CustomButton(
@@ -56,6 +60,10 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                     width: 1,
                     icon: 'assets/icons/Twitter.png',
                     bgColor: AppColors.twitterButtonColor,
+                    onClick: () {
+                      Get.snackbar(
+                          "Message", "This Feature will be available soon.");
+                    },
                   )
                 ],
               ),
@@ -66,7 +74,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const TextWidget(
-                      label: "Alredy Have an Account?",
+                      label: "Already Have an Account?",
                       fontSize: 15,
                       color: AppColors.greyColor,
                     ),
